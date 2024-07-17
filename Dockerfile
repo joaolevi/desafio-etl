@@ -1,10 +1,18 @@
-FROM python:3.9-slim
+FROM python:3.9
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app
+RUN pip install -r requirements.txt
 
-COPY . .
+COPY app/ /app
 
-CMD ["python", "app.py"]
+ADD crontab /etc/cron.d/cronjob
+
+RUN chmod 0644 /etc/cron.d/cronjob
+RUN touch /var/log/cron.log
+RUN apt-get update
+RUN apt-get -y install cron
+RUN mkdir /app/logs
+
+CMD cron && tail -f /var/log/cron.log

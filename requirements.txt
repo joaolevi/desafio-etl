@@ -1,5 +1,5 @@
-requests
-sqlalchemy
-psycopg2-binary
-python-dotenv
-pandas
+requests==2.32.3
+sqlalchemy==2.0.31
+psycopg2-binary==2.9.9
+pandas==2.2.2
+logger==1.4
