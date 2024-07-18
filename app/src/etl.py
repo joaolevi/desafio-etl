@@ -31,12 +31,10 @@ def transform_data(data: dict) -> list:
     func_name = 'clean_data: '
 
     cleaned_data = []
-    contador = 1 # remover tbm
 
     logger.info(func_name + 'Starting to clean the data')
     for item in data['resultado']['listaItem']:
         try:
-            contador += 1
             proposicao = {
                 'author': clean_text(item.get('autor', '').strip()),
                 'presentationDate': datetime.strptime(item.get('dataPublicacao', ''), '%Y-%m-%d') if item.get('dataPublicacao', '') else None,
@@ -66,9 +64,6 @@ def transform_data(data: dict) -> list:
             logger.error(func_name + 'Error cleaning data: ' + str(e))
             continue
 
-        # somente teste - remover
-        if contador == 10:
-            break
     return cleaned_data
 
 def load_data(cleaned_data: list, session: sessionmaker) -> None:
