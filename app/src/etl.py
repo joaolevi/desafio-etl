@@ -5,7 +5,7 @@ from logger import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 logger = logging.getLogger(__name__)
 
-def get_data() -> dict:
+def extract_data() -> dict:
     import requests
 
     func_name = 'get_data: '
@@ -25,7 +25,7 @@ def clean_text(texto: str) -> str:
     cleaned_text = ' '.join(texto.split())
     return cleaned_text.replace('\n', '')
 
-def clean_data(data: dict) -> list:
+def transform_data(data: dict) -> list:
     from datetime import datetime
 
     func_name = 'clean_data: '

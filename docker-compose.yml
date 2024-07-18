@@ -11,16 +11,30 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
 
   app:
     depends_on:
       - db
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/app/Dockerfile
     environment:
       DATABASE_URL: postgresql+psycopg2://postgres:password@db:5432/propositions_db
     volumes:
       - ./app:/app
-    command: cron && tail -f /var/log/cron.log
+    command: [python, app.py]
+
+  crontab:
+    build:
+      context: ./
+      dockerfile: docker/crontab/Dockerfile
+    container_name: ingestion-cronjob
+    restart: always
+    working_dir: /etc/cron.d
+    volumes:
+      - ./docker/crontab/files:/etc/cron.d
+      - ./docker/crontab/scripts:/scriptcron
+
+volumes:
+  db:

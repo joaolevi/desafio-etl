@@ -1,0 +1,2 @@
+* * * * * echo "Starting ETL Job: $(date "+%F %T %Z")" && curl -X POST 'http://app:5000/etl' && echo "ETL job done"
+# Don't remove the empty line at the end of this file. It is required to run the cron job
